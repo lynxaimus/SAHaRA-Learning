@@ -1,6 +1,7 @@
 # History files
 .Rhistory
 .Rapp.history
+.Rhistory
 
 # Session Data files
 .RData
@@ -47,3 +48,7 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+packrat/lib*/
+
+# Packrat files 
+packrat/
