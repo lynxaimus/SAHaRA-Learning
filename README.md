@@ -21,7 +21,7 @@ This repository contains the following:
 
 3. **Documentation**:
    - Detailed explanations of the methods used for data collection and analysis.
-   - Descriptions of the variables in the datasets.
+   - Descriptions of the variables in the datasets, including form questions and answer options.
    - Instructions for replicating the analysis.
    - The text of the RMD (RMarkdown file) is not the final one. The report in its final version is in the file "Impact Analysis Report - ECHO SAHaRA Project (Nigeria).pdf"
    - The folder also includes the learning brief in PDF format summarising the key messages for dissemination.
