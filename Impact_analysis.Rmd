@@ -66,17 +66,7 @@ suppressMessages(
 ```
 
 
-\newline
-\newline
-
 ```{r lineplot_submissions_study_1, fig.width = 9, fig.height=4, message=FALSE, eval = params$graphs, cache = params$cache}
-
-# Source custom function to plot lines 
-suppressMessages(
-  source('script/toplineplot.R', 
-         encoding = "UTF-8") 
-)
-
 # Plots a line with submissions by date
 
 toplineplot(
@@ -2363,55 +2353,43 @@ summary(lm_model)
 
 ```
 
-The output above provides elements for the analysis of water access based on the regression analysis with PSM-matched data.
 
-**Intervention Effect**: The coefficient for the treatment variable is statistically significant (p-value = 0.000413), indicating that the project intervention had a significant direct impact on households' access to water.
+The output above provides elements for analysing water access based on the regression analysis with PSM-matched data.
 
-The variable `wash.percapita` represents whether households have access to at least 15 litres of water per person per day. It is coded as follows:
-- **Yes (1)**: Household has access to the required water per capita.
-- **No (2)**: Household does not have access to the required water per capita.
-- **Not_applicable (3)**: This category is less relevant in this context but included for completeness.
+Intervention effect: The coefficient for the treatment variable is statistically significant (p-value = 0.000413), indicating that the project intervention had a significant direct impact on households' access to water. 
 
-The project intervention's coefficient is negative and statistically significant, indicating that, on average, households that received the treatment are slightly less likely to have access to at least 15 litres of water per person per day compared to those that did not receive the treatment. Possible reasons include prioritisation of the most vulnerable areas, for example. Initial implementation challenges may also have an impact. During the early stages of the project, there might have been logistical or operational challenges that temporarily hindered water access improvements. In some cases, the intervention might have focused on other urgent needs or longer-term infrastructure projects that did not immediately improve water access but could have other long-term benefits. Measurement timing may also play a role since the impact assessment might have occurred during a period of transition or adjustment, where the full benefits of the intervention had not yet been realised.
+The variable `wash.percapita` represents whether households have access to at least 15 litres of water per person per day. It is coded as follows: 
 
+* Yes (1): Household has access to the required water per capita. 
+* No (2): Household does not have access to the required water per capita. 
 
-**Important Covariates**:
+The project intervention’s coefficient is negative and statistically significant. However, because the "No" category is coded as 2, this actually suggests that the intervention increased the probability of a household having sufficient water access.  In other words, treated households are more likely to move from the "No" (2) category to the "Yes" (1) category. 
 
-1. **Water Source Location (wash.location)**:
-   - The location of the water source is a critical factor. Households with better proximity to water sources have significantly improved access (p < 0.001).
+**Important covariates:**
 
-2. **Basic Water Needs (wash.basic_needs)**:
-   - Households that meet their basic water needs are more likely to have sufficient water access. This factor shows a significant positive association (p < 0.001).
+* Water source location (`wash.location`):  Households with better proximity to water sources have significantly improved access (p < 0.001).
+* Basic water needs (`wash.basic_needs`): Households that meet their basic water needs are more likely to have sufficient water access. This factor shows a significant positive association (p < 0.001).
+* Fetching time (`wash.fetchingtime`):  Shorter water fetching times are associated with better water access, highlighting the importance of reducing the distance or time required to collect water (p = 0.001859).
+* Availability of soap (`wash.nfi_soap`): The availability of non-food items such as soap also plays a role in water access, with mixed effects. The linear term shows a marginally significant positive association (p = 0.053288), while the quadratic term is negatively associated (p = 0.027598).
+* Year 1 implementation (`year_1Yes`): The implementation phase also significantly affects water access. The negative coefficient suggests that initial implementation stages might have faced challenges (p < 0.001).
 
-3. **Fetching Time (wash.fetchingtime)**:
-   - Shorter water fetching times are associated with better water access, highlighting the importance of reducing the distance or time required to collect water (p = 0.001859).
+These results offer a clear understanding of the factors influencing water access and highlight the importance of targeted interventions to improve water availability and quality for households. The significant impact of the treatment variable underscores the effectiveness of the project intervention in enhancing water access.
 
-4. **Availability of Soap (wash.nfi_soap)**:
-   - The availability of non-food items such as soap also plays a role in water access, with mixed effects. The linear term shows a marginally significant positive association (p = 0.053288), while the quadratic term is negatively associated (p = 0.027598).
+**Recommendations:**
 
-5. **Year 1 Implementation (year_1Yes)**:
-   - The implementation phase also significantly affects water access, with a negative coefficient indicating that initial implementation stages might have faced challenges (p < 0.001).
+* Improve proximity to water sources: Reduce the distance between households and water sources through infrastructure projects that bring water sources closer to residential areas.
+* Enhance distribution of hygiene supplies: Ensure the availability of non-food items such as soap to improve overall water access. Prioritise hygiene promotion programmes.
+* Address basic water needs: Secure the basic water needs of households by providing sufficient water for daily use.
+* Reduce water fetching times: Implement measures to reduce the time required to collect water, such as closer water points and efficient water distribution systems.
+* Monitor implementation phases: Continuously monitor and evaluate the impact of different implementation phases on water access to optimise the timing and sequencing of interventions.
 
-These results provide a clear understanding of the factors influencing water access and highlight the importance of targeted interventions to improve water availability and quality for households. The significant impact of the treatment variable underscores the effectiveness of the project intervention in enhancing water access. 
+These recommendations aim to improve water access by addressing the critical factors identified in the analysis, ensuring that interventions are effective and targeted to the needs of the households. 
 
-**Potential Policy Recommendations**
-
-1. **Improve Proximity to Water Sources**: Reduce the distance between households and water sources through infrastructure projects that bring water sources closer to residential areas.
-
-2. **Enhance Distribution of Hygiene Supplies**: Ensure the availability of non-food items such as soap to improve overall water access. Prioritise hygiene promotion programs.
-
-3. **Address Basic Water Needs**: Secure the basic water needs of households by providing sufficient water for daily use.
-
-4. **Reduce Water Fetching Times**: Implement measures to decrease the time required to collect water, such as closer water points and efficient water distribution systems.
-
-5. **Monitor Implementation Phases**: Continuously monitor and evaluate the impact of different implementation phases on water access to optimise the timing and sequencing of interventions.
-
-These recommendations aim to improve water access by addressing the critical factors identified in the analysis, ensuring that interventions are effective and targeted to the needs of the households.
 
 
 #### DiD Model for Water Access
 
-A DiD model was employed to assess the impact of the project intervention on households' access to at least 15 liters of water per person per day (`wash.percapita`). This model includes the interaction term between the implementation period and the post-intervention period, along with various covariates identified as significant in previous analyses.
+A DiD model was employed to assess the impact of the project intervention on households' access to at least 15 liters of water per person per day. This model includes the interaction term between the implementation period and the post-intervention period, along with various covariates identified as significant in previous analyses.
 
 ```{r did_wateraccess}
 # # Load necessary libraries
@@ -2441,31 +2419,33 @@ did_model_water <- fixest::feols(
 summary(did_model_water)
 
 ```
-Key findings from the DiD model are as follows:
 
-1. **Intervention Effect**:
-   - The coefficients for the treatment periods (`implementationYear 1 to 3` and `implementationYear 2 to 3 alone`) are negative and statistically significant, suggesting that during these periods, there were challenges in ensuring water access, compared to households in areas not covered by the project. Specifically:
-     - `implementationYear 1 to 3`: Estimate = -0.334804, p-value = 0.044942
-     - `implementationYear 2 to 3 alone`: Estimate = -0.105108, p-value = 0.015416
+**Key findings from the DiD model are as follows:**
 
-2. **Significant Covariates**:
-   - **Water Source Location** (`wash.location.L`): A positive and statistically significant association with water access, indicating that closer proximity to water sources improves water availability. (Estimate = 0.677680, p-value = 0.060653)
-   - **Fetching Time** (`wash.fetchingtime.L`): A positive association, suggesting shorter fetching times are beneficial for water access. (Estimate = 0.097943, p-value = 0.042629)
-   - **Availability of Soap** (`wash.nfi_soap.Q`): A negative association, indicating that households with sufficient soap might face less water access issues. (Estimate = -0.107781, p-value = 0.026898)
+**Intervention effect:**
 
-**Potential Policy Recommendations:**
+The coefficients for the treatment periods (implementationYear 1 to 3 and implementationYear 2 to 3 alone) are negative and statistically significant. However, since the outcome variable is coded such that a higher value indicates *less* water access, these negative coefficients actually suggest that the intervention **improved** water access during those periods, compared to households in areas not covered by the project. Specifically:
 
-1. **Enhance Proximity to Water Sources**:
-   - **Infrastructure Projects**: Prioritise reducing the distance between households and water sources. Building and maintaining nearby water infrastructure can significantly enhance water access.
+* **implementationYear 1 to 3:** The estimate of -0.334804 (p-value = 0.044942) indicates a significant increase in the likelihood of having adequate water access during the first three years of implementation. 
+* **implementationYear 2 to 3 alone:** The estimate of -0.105108 (p-value = 0.015416) suggests a significant, though smaller, increase in the likelihood of adequate water access for those receiving the intervention only in the latter two years.
 
-2. **Improve Water Fetching Efficiency**:
-   - **Shorten Fetching Times**: Implement strategies to reduce the time spent fetching water, such as increasing the number of water points and improving transportation means.
+**Significant covariates:**
 
-3. **Promote Hygiene Supplies**:
-   - **Distribution of Soap**: Ensure the continuous availability of hygiene supplies, such as soap, which has shown to have a mixed but generally positive impact on water access.
+* **Water source location (wash.location.L):** A positive and statistically significant association with water access, reinforcing the importance of proximity to water sources in improving water availability. 
+* **Fetching time (wash.fetchingtime.L):** A positive association, confirming that shorter fetching times are beneficial for water access. 
+* **Availability of soap (wash.nfi_soap.Q):** A negative association, suggesting that households with sufficient soap might face fewer water access issues, possibly due to improved hygiene practices and reduced water wastage. 
 
-4. **Address Implementation Challenges**:
-   - **Evaluate and Adjust**: Regularly evaluate the project implementation phases to address and mitigate any challenges that arise, ensuring continuous improvement and adaptation of strategies to improve water access.
+**Recommendations:**
+
+* **Enhance proximity to water sources:**
+    * Infrastructure projects: Prioritise reducing the distance between households and water sources. Building and maintaining nearby water infrastructure can significantly enhance water access.
+* **Improve water fetching efficiency:**
+    * Shorten fetching times: Implement strategies to reduce the time spent fetching water, such as increasing the number of water points and improving transportation means.
+* **Promote hygiene supplies:**
+    * Distribution of soap: Ensure the continuous availability of hygiene supplies, such as soap, which has shown to have a positive impact on water access.
+* **Address implementation challenges:**
+    * Evaluate and adjust: Regularly evaluate the project implementation phases to address and mitigate any challenges that arise, ensuring continuous improvement and adaptation of strategies to improve water access.
+
 
 
 ### Protection
@@ -2690,6 +2670,7 @@ The significant improvements observed in the SAHARA project underscore the poten
 
 In conclusion, the SAHARA project has made significant strides in improving the lives of the communities it serves. The comprehensive approach, combining food security, water access, protection, and coping strategies, has proven effective in creating a more secure and resilient environment. Future efforts should focus on sustaining and enhancing these positive impacts, ensuring that the benefits reach the most vulnerable populations and addressing any emerging challenges through adaptive and responsive strategies.
 
+
 \newpage
 
 # References
@@ -2733,4 +2714,3 @@ autobib(packages)
 ```
 
 \newpage
-
